@@ -2,9 +2,11 @@
 
 import { Provider } from 'react-redux'
 import { store } from '../store'
-import TodoList from './components/TodoList'
-import EmployeeList from './components/EmployeeList'
+import dynamic from 'next/dynamic'
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom'
+
+const TodoList = dynamic(() => import('./components/TodoList'), { ssr: false })
+const EmployeeList = dynamic(() => import('./components/EmployeeList'), { ssr: false })
 
 export default function Home() {
   return (
@@ -30,3 +32,4 @@ export default function Home() {
     </Provider>
   )
 }
+

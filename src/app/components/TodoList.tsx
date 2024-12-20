@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../../store'
 import { addTodo, toggleTodo, deleteTodo, updateTodo } from '../../store/todoSlice'
@@ -17,6 +17,11 @@ export default function TodoList() {
   const [newTodo, setNewTodo] = useState('')
   const [editingId, setEditingId] = useState<number | null>(null)
   const [editText, setEditText] = useState('')
+  const [isClient, setIsClient] = useState(false)
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   const handleAddTodo = (e: React.FormEvent) => {
     e.preventDefault()
@@ -37,6 +42,10 @@ export default function TodoList() {
       setEditingId(null)
       setEditText('')
     }
+  }
+
+  if (!isClient) {
+    return null // or a loading indicator
   }
 
   return (

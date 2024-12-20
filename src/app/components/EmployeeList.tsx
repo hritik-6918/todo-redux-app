@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState, AppDispatch } from '../../store'
 import { fetchEmployees, Employee } from '../../store/employeeSlice'
@@ -8,10 +8,16 @@ import { fetchEmployees, Employee } from '../../store/employeeSlice'
 export default function EmployeeList() {
   const dispatch = useDispatch<AppDispatch>()
   const { employees, loading, error } = useSelector((state: RootState) => state.employees)
+  const [isClient, setIsClient] = useState(false)
 
   useEffect(() => {
+    setIsClient(true)
     dispatch(fetchEmployees())
   }, [dispatch])
+
+  if (!isClient) {
+    return null // or a loading indicator
+  }
 
   if (loading) {
     return <div className="text-center mt-8">Loading...</div>
@@ -36,3 +42,4 @@ export default function EmployeeList() {
     </div>
   )
 }
+
